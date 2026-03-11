@@ -4,14 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .hero {
+            background: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 50px;
+            border-radius: 10px;
+        }
+        .countdown {
+            font-size: 48px;
+            margin-top: 20px;
+        }
+        .products {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #password-protection {
+            display: none;
+        }
+    </style>
     <script>
-        var countdownDate = new Date('2026-04-01T00:00:00');
+        // Countdown Timer
+        const countDownDate = new Date('April 1, 2026 00:00:00 GMT').getTime();
+        const countdownFunction = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('countdown').innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById('countdown').innerHTML = 'Countdown is over!';
+            }
+        }, 1000);
 
-        // Other existing code...
+        // Password Protection Logic
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            if (password === 'yourpassword') { // Change 'yourpassword' to the actual password
+                document.getElementById('password-protection').style.display = 'none';
+                document.getElementById('hero-section').style.display = 'block';
+            } else {
+                alert('Incorrect Password!');
+            }
+        }
     </script>
 </head>
 <body>
-    <h1>Countdown to April 1st, 2026</h1>
-    <div id="countdown"></div>
+    <div id="password-protection">
+        <input type="password" id="password-input" placeholder="Enter Password" />
+        <button onclick="checkPassword()">Submit</button>
+    </div>
+    <div id="hero-section" style="display: none;">
+        <div class="hero">
+            <h1>Countdown to April 1, 2026</h1>
+            <div id="countdown" class="countdown"></div>
+        </div>
+        <div class="products">
+            <div class="product">
+                <h2>Product 1</h2>
+                <p>Description of Product 1</p>
+            </div>
+            <div class="product">
+                <h2>Product 2</h2>
+                <p>Description of Product 2</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
